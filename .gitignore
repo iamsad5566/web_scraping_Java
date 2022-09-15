@@ -1,2 +1,2 @@
 # Exclude env file
-./config.yml
+config.yml
