@@ -78,7 +78,7 @@ public class Browsing {
             if (sb.toString().split(" ")[5].startsWith(lastMonth)) {
                 return false;
             }
-            getTarget(driver, plans.get(i), sb, list, thisMonthAndYear.getMonth());
+            saveTarget(driver, plans.get(i), sb, list, thisMonthAndYear.getMonth());
 
             // 重抓一次所有計畫
             plans = driver.findElements(By.tagName("tr"));
@@ -94,7 +94,7 @@ public class Browsing {
         return sb;
     }
 
-    private void getTarget(WebDriver driver, WebElement element, StringBuilder sb,
+    private void saveTarget(WebDriver driver, WebElement element, StringBuilder sb,
             ArrayList<String> list, String thisMonth) {
         if (sb.toString().split(" ").length < 11 || !sb.toString().split(" ")[5].startsWith(
                 thisMonth)) {
