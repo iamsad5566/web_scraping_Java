@@ -4,4 +4,4 @@ This is an automated crawler for BAC lab
 
 Process
 ---
-Load config.yml
+Load config.yml (From local)
