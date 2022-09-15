@@ -3,6 +3,8 @@ import java.util.NoSuchElementException;
 
 import config.EnvironmentVariable;
 import config.GetDriver;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import module.InputProcessor;
 import obj.Time;
 import org.openqa.selenium.*;
@@ -20,10 +22,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 public class Crawler {
-    // Create a Workbook first so that all methods below can use
-    static Workbook wb = new HSSFWorkbook();
+
     // Set the pathway of the chromedriver.exe and create a drive
     GetDriver getDriver = new GetDriver();
+    static Workbook wb = new HSSFWorkbook();
 
     public static void main(String[] args) throws Exception {
         // Get target month and last month from the input
@@ -34,13 +36,13 @@ public class Crawler {
         System.out.printf("Year: %S, Month: %S\n", thisMonth.getYear(), thisMonth.getMonth());
         System.out.printf("Year: %S, Month: %S\n", lastMonth.getYear(), lastMonth.getMonth());
 
-        WebDriver driver = new ChromeDriver();
-
-        // Add the sheets
-        Sheet first = wb.createSheet("各類所得（受試者費）");
-        Sheet second = wb.createSheet("各計畫當月總支出");
-        Sheet third = wb.createSheet("受試者費以外的支出");
-        Sheet fourth = wb.createSheet("個人當月代墊總和");
+//        WebDriver driver = new ChromeDriver();
+//
+//        // Add the sheets
+//        Sheet first = wb.createSheet("各類所得（受試者費）");
+//        Sheet second = wb.createSheet("各計畫當月總支出");
+//        Sheet third = wb.createSheet("受試者費以外的支出");
+//        Sheet fourth = wb.createSheet("個人當月代墊總和");
 
 
 //
