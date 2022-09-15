@@ -5,6 +5,7 @@ import obj.ObjProcessor;
 import obj.Time;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -32,15 +33,21 @@ public class Browsing {
         driver.navigate().to("https://ntuacc.cc.ntu.edu.tw/acc/apply/list.asp?yearchoose=" + targetYear);
 
 
-
-
-
         return new ArrayList<String>();
     }
 
     public List<String> browseFunding(WebDriver driver) {
-        for(; ;) {
+        for (; ; ) {
             var plans = driver.findElements(By.tagName("tr"));
+
+        }
+    }
+
+    public boolean visitPlans(String targetYear, List<WebElement> plans) {
+        for (int i = 0; i < plans.size(); i++) {
+            if (!plans.get(i).getText().startsWith(targetYear + "T")) {
+                return false;
+            }
 
         }
     }
