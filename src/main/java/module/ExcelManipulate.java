@@ -39,7 +39,7 @@ public class ExcelManipulate {
         StringBuilder sb = new StringBuilder();
         String[] date_arr = new Date().toString().split(" ");
         sb.append(date_arr[1]).append('_').append(date_arr[2]);
-        FileOutputStream fileOut = new FileOutputStream(path + sb + ".xls");
+        FileOutputStream fileOut = new FileOutputStream(path + "/output/" +sb + ".xls");
         wb.write(fileOut);
         fileOut.close();
     }
