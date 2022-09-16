@@ -1,8 +1,6 @@
 Crawler for NTU BAC lab
 ===
-## Java version: 16
-This is an automated crawler for BAC lab. 
-The crawler will crawl data from the NTU accounting web, after sorting the data, an Xls file will be exported to the /output folder.
+The crawler will crawl data from the NTU accounting web, after sorting the data, a Xls file will be exported to the folder where this program is within.
 
 Note
 ---
@@ -15,7 +13,8 @@ Note
 
 How to use?
 ---
-1. Package the file with Maven and run the output `.jar` file. The file would be put in `/target` folder (remember to set the main class). 
+1. Package the file with Maven and run the output `.jar` file (Check out if the main class is included in).
 2. Directly run this program through the `main` method under the `Crawler` class.  
 > / src / main / java / Crawler.java  
-3. Convert the `.jar` file to `.exe`, open it by simply double clicks. Visited [Launch4J](http://launch4j.sourceforge.net/) to get more details.
+3. Convert the `.jar` file to `.exe`, open it by simply double clicks. Visit [launch4j](http://launch4j.sourceforge.net/) for more detail.
+
