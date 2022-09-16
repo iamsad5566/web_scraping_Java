@@ -11,6 +11,7 @@ public class GetDriver {
         switch (EnvironmentVariable.getInstance().data.get("OS").toString()) {
             case "windows":
                 System.setProperty("webdriver.chrome.driver", path + "/chromedriver.exe");
+                break;
             default:
                 System.setProperty("webdriver.chrome.driver", path + "/chromedriver");
         }
