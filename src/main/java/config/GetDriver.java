@@ -5,7 +5,11 @@ public class GetDriver {
 
     public GetDriver() {
         this.path = System.getProperty("user.dir");
-        System.setProperty("webdriver.chrome.driver", path + "/chromedriver");
+        try {
+            System.setProperty("webdriver.chrome.driver", path + "/chromedriver");
+        } catch (Exception e) {
+            System.setProperty("webdriver.chrome.driver", path + "/chromedriver.exe");
+        }
     }
 
     public String getPath() {

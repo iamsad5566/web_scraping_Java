@@ -5,6 +5,9 @@ import config.EnvironmentVariable;
 import config.GetDriver;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import module.Browsing;
+import module.ExcelManipulate;
 import module.InputProcessor;
 import obj.Time;
 import org.openqa.selenium.*;
@@ -22,9 +25,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 public class Crawler {
-
-    // Set the pathway of the chromedriver.exe and create a drive
-    GetDriver getDriver = new GetDriver();
     static Workbook wb = new HSSFWorkbook();
 
     public static void main(String[] args) throws Exception {
@@ -32,11 +32,15 @@ public class Crawler {
         InputProcessor inputProcessor = new InputProcessor();
         Time thisMonth = inputProcessor.getThisMonth();
         Time lastMonth = inputProcessor.getLastMonth(thisMonth);
+        System.out.printf("Target year: %S, month: %S\n", thisMonth.getYear(), thisMonth.getMonth());
 
-        System.out.printf("Year: %S, Month: %S\n", thisMonth.getYear(), thisMonth.getMonth());
-        System.out.printf("Year: %S, Month: %S\n", lastMonth.getYear(), lastMonth.getMonth());
+        // Start chrome driver
+        GetDriver getDriver = new GetDriver();
+        WebDriver driver = new ChromeDriver();
+        var list = Browsing.getInstance().BrowseController(driver, thisMonth, lastMonth);
+        ExcelManipulate.getInstance().saveDataInExcel(list, getDriver.getPath());
 
-//        WebDriver driver = new ChromeDriver();
+
 //
 //        // Add the sheets
 //        Sheet first = wb.createSheet("各類所得（受試者費）");

@@ -10,14 +10,23 @@ import org.openqa.selenium.WebElement;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.openqa.selenium.interactions.Actions;
 
 public class Browsing {
 
     ObjProcessor objProcessor = new ObjProcessor();
 
+    private Browsing() {
+
+    }
+
+    public static Browsing getInstance() {
+        return new Browsing();
+    }
+
     public List<String> BrowseController(WebDriver driver, Time thisMonthAndYear,
-            Time lastMonthAndYear) throws FileNotFoundException, InterruptedException {
+                                         Time lastMonthAndYear) throws FileNotFoundException, InterruptedException {
         // Direct to NTU web
         driver.get("https://ntuacc.cc.ntu.edu.tw/acc/index.asp?campno=m&idtype=3");
 
@@ -46,12 +55,10 @@ public class Browsing {
     }
 
     private List<String> browseFunding(WebDriver driver, Time thisMonthAndYear,
-            Time lastMonthAndYear) {
+                                       Time lastMonthAndYear) {
         var list = new ArrayList<String>();
         for (; ; ) {
-            var plans = driver.findElements(By.tagName("tr"));
-            boolean keepLooping = visitPlans(driver, thisMonthAndYear, lastMonthAndYear.getMonth(),
-                    plans, list);
+            boolean keepLooping = visitPlans(driver, thisMonthAndYear, lastMonthAndYear, list);
             if (!keepLooping) {
                 break;
             }
@@ -67,21 +74,20 @@ public class Browsing {
         return list;
     }
 
-    private boolean visitPlans(WebDriver driver, Time thisMonthAndYear, String lastMonth,
-            List<WebElement> plans,
-            ArrayList<String> list) {
+    private boolean visitPlans(WebDriver driver, Time thisMonthAndYear, Time lastMonthAndYear,
+                               ArrayList<String> list) {
+        var plans = driver.findElements(By.tagName("tr"));
         for (int i = 0; i < plans.size(); i++) {
-            if (!plans.get(i).getText().startsWith(thisMonthAndYear.getYear() + "T")) {
-                return false;
+            String row = plans.get(i).getText();
+            if (row.startsWith(thisMonthAndYear.getYear() + "T")) {
+                StringBuilder sb = composeString(plans.get(i));
+                if (sb.toString().split("//")[5].startsWith(lastMonthAndYear.getYear() + lastMonthAndYear.getMonth())) {
+                    return false;
+                }
+                saveTarget(driver, plans.get(i), sb.toString(), list, thisMonthAndYear);
+                plans = driver.findElements(By.tagName("tr"));
             }
-            StringBuilder sb = composeString(plans.get(i));
-            if (sb.toString().split(" ")[5].startsWith(lastMonth)) {
-                return false;
-            }
-            saveTarget(driver, plans.get(i), sb, list, thisMonthAndYear.getMonth());
 
-            // 重抓一次所有計畫
-            plans = driver.findElements(By.tagName("tr"));
         }
         return true;
     }
@@ -89,15 +95,17 @@ public class Browsing {
     private StringBuilder composeString(WebElement element) {
         StringBuilder sb = new StringBuilder();
         for (String s : element.getText().split(" ")) {
-            sb.append(s).append(" ");
+            if(!s.equals("各類所得")) {
+                sb.append(s).append("//");
+            }
         }
         return sb;
     }
 
-    private void saveTarget(WebDriver driver, WebElement element, StringBuilder sb,
-            ArrayList<String> list, String thisMonth) {
-        if (sb.toString().split(" ").length < 11 || !sb.toString().split(" ")[5].startsWith(
-                thisMonth)) {
+    private void saveTarget(WebDriver driver, WebElement element, String string,
+                            ArrayList<String> list, Time thisMonthAndYear) {
+        if (string.split("//").length < 10 || !string.split("//")[5].startsWith(
+                thisMonthAndYear.getYear() + thisMonthAndYear.getMonth())) {
             return;
         }
 
@@ -108,20 +116,20 @@ public class Browsing {
                 By.xpath("/html/body/center/center/table[1]/tbody/tr[2]/td[2]")).getText();
         for (char c : nameInfo.toCharArray()) {
             if (c != ' ') {
-                sb.append(c);
+                string += c;
             }
         }
 
         // 如果是受試者費，儲存稅前的金額
-        if (sb.toString().contains("受試者費")) {
-            sb.append(" ").append(driver.findElement(
-                    By.xpath("/html/body/center/center/table[1]/tbody/tr[2]/td[3]")).getText());
+        if (string.contains("受試者費")) {
+            string += driver.findElement(
+                    By.xpath("/html/body/center/center/table[1]/tbody/tr[2]/td[3]")).getText();
         }
 
         // 存入 list
-        list.add(sb.toString());
+        list.add(string);
 
-        System.out.println(sb);
+        System.out.println(string);
         driver.findElement(By.name("back")).click();
     }
 }
