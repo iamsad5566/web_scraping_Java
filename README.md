@@ -15,7 +15,7 @@ Note
 
 How to use?
 ---
-1. Package the file with Maven and run the output `.jar` file. The jar file would be put in `/target` folder
+1. Package the file with Maven and run the output `.jar` file. The file would be put in `/target` folder
 2. Directly run this program through the `main` method under the `Crawler` class.  
 > / src / main / java / Crawler.java  
-3. Convert the `.jar` file to .exe, open it by simply double clicks. Visited [Launch4J](http://launch4j.sourceforge.net/) to get more details.
+3. Convert the `.jar` file to `.exe`, open it by simply double clicks. Visited [Launch4J](http://launch4j.sourceforge.net/) to get more details.
