@@ -1,11 +1,19 @@
 package config;
 
+import java.io.FileNotFoundException;
+
 public class GetDriver {
+
     String path;
 
-    public GetDriver() {
+    public GetDriver() throws FileNotFoundException {
         this.path = System.getProperty("user.dir");
-        System.setProperty("webdriver.chrome.driver", path + "/chromedriver");
+        switch (EnvironmentVariable.getInstance().data.get("OS").toString()) {
+            case "windows":
+                System.setProperty("webdriver.chrome.driver", path + "/chromedriver.exe");
+            default:
+                System.setProperty("webdriver.chrome.driver", path + "/chromedriver");
+        }
     }
 
     public String getPath() {
