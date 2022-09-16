@@ -1,6 +1,8 @@
 Crawler for NTU BAC lab
 ===
-This is an automated crawler for BAC lab.
+## Java version: 16
+This is an automated crawler for BAC lab. 
+The crawler will crawl data from the NTU accounting web, after sorting the data, an Xls file will be exported to the /output folder.
 
 Note
 ---
