@@ -1,5 +1,6 @@
 Crawler for NTU BAC lab
 ===
+Java version: 16
 The crawler will crawl data from the NTU accounting web, after sorting the data, a Xls file will be exported to the folder where this program is within.
 
 Note
