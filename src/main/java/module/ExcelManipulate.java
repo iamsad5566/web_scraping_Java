@@ -34,7 +34,7 @@ public class ExcelManipulate {
         Sheet firstSheet = createFirstSheet(list);
         Sheet secondSheet = createSecondSheet(list);
         Sheet thirdSheet = createThirdSheet(firstSheet, secondSheet);
-//        createFourthSheet(firstSheet, thirdSheet);
+        createFourthSheet(firstSheet, thirdSheet);
 
         StringBuilder sb = new StringBuilder();
         String[] date_arr = new Date().toString().split(" ");
@@ -51,48 +51,29 @@ public class ExcelManipulate {
         Cell title_cell = title_row.createCell(0);
 
         // Set up the header
-        String headers[] = new String[]{"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
+        String headers[] = new String[] {"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
                 "付款資料", "報帳ID", "列印次數", "受款人", "備註", "稅前金額"};
-        var nameList = (ArrayList<String>) EnvironmentVariable.getInstance().data.get("member");
+
         Row header_row = first.createRow(1);
         header_row.setHeight((short) (20 * 24));
 
-        // 只留有稅錢金額的 data
+        // 只留有稅前金額的 data
         var experimentList = new ArrayList<String>();
         for (String s : list) {
-            if (s.split("//").length == headers.length - 1) {
-                if (s.contains("實發金額")) {
-                    for (String name : nameList) {
-                        if (s.contains(name)) {
-                            String num = s.split(name + "\\)")[1];
-                            if (!Character.isDigit(num.charAt(0))) {
-                                num = s.split(name + "）")[1];
-                            }
-                            s = s.split("實發金額")[0];
-                            s += (name + "//" + num);
-                            break;
-                        }
-                    }
-                }
+            if (s.contains("受試者費")) {
+                s = DataProcessor.getInstance().reConstructStringByMember(s);
                 experimentList.add(s);
-                System.out.println(s);
             }
         }
 
         //建立單元格的 顯示樣式
-        CellStyle style = wb.createCellStyle();
-        style.setAlignment(CellStyle.ALIGN_CENTER); //水平方向上的對其方式
-        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);    //垂直方向上的對其方式
-
-        title_cell.setCellStyle(style);
-        title_cell.setCellValue("各類所得（受試者費）");
-
+        CellStyle style = createStyle(title_cell, "各類所得（受試者費）");
         first.addMergedRegion(new CellRangeAddress(0, 0, 0, headers.length - 1));
 
         // 把 header 的每一個 string 加上
         for (int i = 0; i < headers.length; i++) {
             //設定列寬   基數為256
-            first.setColumnWidth(i, 30 * 256);
+            first.setColumnWidth(i, 30 * 128);
             Cell cell = header_row.createCell(i);
             //應用樣式到  單元格上
             cell.setCellStyle(style);
@@ -118,22 +99,18 @@ public class ExcelManipulate {
         title_row.setHeight((short) (40 * 20));
         Cell title_cell = title_row.createCell(0);
 
-        String headers[] = new String[]{"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
-                "付款資料", "報帳ID", "列印次數", "受款人", "備註", "金額"};
+        String headers[] = new String[] {"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
+                "付款資料", "報帳ID", "列印次數", "受款人", "備註"};
         Row header_row = second.createRow(1);
         header_row.setHeight((short) (20 * 24));
 
         //建立單元格的 顯示樣式
-        CellStyle style = wb.createCellStyle();
-        style.setAlignment(CellStyle.ALIGN_CENTER); //水平方向上的對其方式
-        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);    //垂直方向上的對其方式
-        title_cell.setCellStyle(style);
-        title_cell.setCellValue("計畫經費報帳");
+        CellStyle style = createStyle(title_cell, "計畫經費報帳");
         second.addMergedRegion(new CellRangeAddress(0, 0, 0, headers.length - 1));
 
         for (int i = 0; i < headers.length; i++) {
             //設定列寬   基數為256
-            second.setColumnWidth(i, 30 * 256);
+            second.setColumnWidth(i, 30 * 128);
             Cell cell = header_row.createCell(i);
             //應用樣式到  單元格上
             cell.setCellStyle(style);
@@ -153,19 +130,23 @@ public class ExcelManipulate {
 
     private Sheet createThirdSheet(Sheet first, Sheet second) {
         Sheet third = wb.createSheet("受試者費以外的支出");
-        String headers[] = new String[]{"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
+        // Sheet3 title
+        Row title_row = third.createRow(0);
+        title_row.setHeight((short) (40 * 20));
+        Cell title_cell = title_row.createCell(0);
+
+        String headers[] = new String[] {"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
                 "付款資料", "報帳ID", "列印次數", "受款人", "備註"};
-        Row header_row = third.createRow(0);
+        Row header_row = third.createRow(1);
         header_row.setHeight((short) (20 * 24));
 
         //建立單元格的 顯示樣式
-        CellStyle style = wb.createCellStyle();
-        style.setAlignment(CellStyle.ALIGN_CENTER); //水平方向上的對其方式
-        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);    //垂直方向上的對其方式
+        CellStyle style = createStyle(title_cell, "受試者費外之支出");
+        third.addMergedRegion(new CellRangeAddress(0, 0, 0, headers.length - 1));
 
         for (int i = 0; i < headers.length; i++) {
             //設定列寬   基數為256
-            third.setColumnWidth(i, 30 * 256);
+            third.setColumnWidth(i, 30 * 128);
             Cell cell = header_row.createCell(i);
             //應用樣式到  單元格上
             cell.setCellValue(headers[i]);
@@ -177,7 +158,7 @@ public class ExcelManipulate {
             barCode.add(first.getRow(i).getCell(0).getStringCellValue());
         }
 
-        int targetRow = 1;
+        int targetRow = 2;
         for (int i = 2; second.getRow(i) != null; i++) {
             if (barCode.contains(second.getRow(i).getCell(0).getStringCellValue())) {
                 continue;
@@ -197,32 +178,45 @@ public class ExcelManipulate {
 
     private void createFourthSheet(Sheet first, Sheet third) throws FileNotFoundException {
         Sheet fourth = wb.createSheet("個人當月代墊總和");
+        // Sheet4 title
+        Row title_row = fourth.createRow(0);
+        title_row.setHeight((short) (40 * 20));
+        Cell title_cell = title_row.createCell(0);
+
         var header = (ArrayList<String>) EnvironmentVariable.getInstance().data.get("member");
-        Row header_row = fourth.createRow(0);
+        Row header_row = fourth.createRow(1);
         header_row.setHeight((short) (20 * 24));
 
+        //建立單元格的 顯示樣式
+        CellStyle style = createStyle(title_cell, "個人當月代墊總和");
+        fourth.addMergedRegion(new CellRangeAddress(0, 0, 0, header.size() - 1));
+
         for (int i = 0; i < header.size(); i++) {
+            fourth.setColumnWidth(i, 30 * 128);
             Cell cell = header_row.createCell(i);
             cell.setCellValue(header.get(i));
+            cell.setCellStyle(style);
         }
 
         // 要算每個人代墊筆數的 array
         int[] rowNum = new int[header.size()];
-        Arrays.fill(rowNum, 1);
+        Arrays.fill(rowNum, 2);
 
-        int index = 1;
+        int index = 2;
         for (int i = 2; first.getRow(i) != null; i++, index++) {
             Row row = fourth.createRow(index);
             row.setHeight((short) (20 * 20));
-            for (int j = 0; j < header.size(); j++)
+            for (int j = 0; j < header.size(); j++) {
                 row.createCell(j);
+            }
         }
 
         for (int i = 1; third.getRow(i) != null; i++, index++) {
             Row row = fourth.createRow(index);
             row.setHeight((short) (20 * 20));
-            for (int j = 0; j < header.size(); j++)
+            for (int j = 0; j < header.size(); j++) {
                 row.createCell(j);
+            }
         }
 
         //  從第一個 column 開始
@@ -260,18 +254,30 @@ public class ExcelManipulate {
             int sum = 0;
 
             // rowNum 記錄每一個人代墊幾筆
-            for (int j = 1; j <= rowNum[i]; j++) {
+            for (int j = 2; j <= rowNum[i]; j++) {
                 String sValue = fourth.getRow(j).getCell(i).getStringCellValue();
                 StringBuilder sb = new StringBuilder();
                 for (char c : sValue.toCharArray()) {
-                    if (Character.isDigit(c))
+                    if (Character.isDigit(c)) {
                         sb.append(c);
+                    }
                 }
-                if (sb.length() != 0)
+                if (sb.length() != 0) {
                     sum += Integer.valueOf(sb.toString());
+                }
             }
             Cell cell = fourth.getRow(index).createCell(i);
             cell.setCellValue(sum);
         }
+    }
+
+    private CellStyle createStyle(Cell titleCell, String title) {
+        //建立單元格的 顯示樣式
+        CellStyle style = wb.createCellStyle();
+        style.setAlignment(CellStyle.ALIGN_CENTER); //水平方向上的對其方式
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);    //垂直方向上的對其方式
+        titleCell.setCellStyle(style);
+        titleCell.setCellValue(title);
+        return style;
     }
 }

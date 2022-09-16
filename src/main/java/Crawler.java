@@ -38,7 +38,12 @@ public class Crawler {
         GetDriver getDriver = new GetDriver();
         WebDriver driver = new ChromeDriver();
         var list = Browsing.getInstance().BrowseController(driver, thisMonth, lastMonth);
-        ExcelManipulate.getInstance().saveDataInExcel(list, getDriver.getPath());
+
+        if(list.size() > 0) {
+            ExcelManipulate.getInstance().saveDataInExcel(list, getDriver.getPath());
+        } else {
+            System.out.println("No data!");
+        }
 
 
 //
