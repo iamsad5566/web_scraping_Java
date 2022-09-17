@@ -1,6 +1,6 @@
-Crawler for NTU BAC lab
+Web scraping for NTU BAC lab
 ===
-The crawler will crawl data from the NTU accounting web, after sorting the data, a Xls file will be exported to the folder where this program is within.
+The scraping program will scrape data from the NTU accounting web, after sorting the data, a Xls file will be exported to the folder where this program is within.
 
 Note
 ---
@@ -14,7 +14,7 @@ Note
 How to use?
 ---
 1. Package the file with Maven and run the output `.jar` file (Check out if the main class is included in).
-2. Directly run this program through the `main` method under the `Crawler` class.  
-> / src / main / java / Crawler.java  
+2. Directly run this program through the `main` method under the `Scraping` class.  
+> / src / main / java / Scraping.java  
 3. Convert the `.jar` file to `.exe`, open it by simply double clicks. Visit [launch4j](http://launch4j.sourceforge.net/) for more detail.
 
