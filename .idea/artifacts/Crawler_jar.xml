@@ -2,7 +2,7 @@
   <artifact type="jar" name="Crawler:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Crawler_jar</output-path>
     <root id="archive" name="Crawler.jar">
-      <element id="module-output" name="Crawler" />
+      <element id="module-output" name="Scraping" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/seleniumhq/selenium/selenium-edge-driver/4.4.0/selenium-edge-driver-4.4.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/opentelemetry/opentelemetry-context/1.16.0/opentelemetry-context-1.16.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/netty/netty-codec/4.1.78.Final/netty-codec-4.1.78.Final.jar" path-in-jar="/" />

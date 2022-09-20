@@ -9,18 +9,20 @@ import java.io.InputStream;
 import java.util.Map;
 
 public class EnvironmentVariable {
+    private static EnvironmentVariable uniqueInstance;
     InputStream inputStream;
-    static EnvironmentVariable env;
     public Map<String, Object> data;
 
-    public EnvironmentVariable() throws FileNotFoundException {
+    private EnvironmentVariable() throws FileNotFoundException {
         this.inputStream = new FileInputStream("config.yml");
         Yaml yaml = new Yaml();
         this.data = yaml.load(inputStream);
     }
 
     public static EnvironmentVariable getInstance() throws FileNotFoundException {
-        env = new EnvironmentVariable();
-        return env;
+        if (uniqueInstance == null) {
+            uniqueInstance = new EnvironmentVariable();
+        }
+        return uniqueInstance;
     }
 }

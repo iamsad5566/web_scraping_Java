@@ -19,7 +19,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 public class ExcelManipulate {
-
+    private static ExcelManipulate excelManipulate;
     static Workbook wb = new HSSFWorkbook();
 
     private ExcelManipulate() {
@@ -27,7 +27,11 @@ public class ExcelManipulate {
     }
 
     public static ExcelManipulate getInstance() {
-        return new ExcelManipulate();
+        if (excelManipulate == null) {
+            excelManipulate = new ExcelManipulate();
+        }
+
+        return excelManipulate;
     }
 
     public void saveDataInExcel(List<String> list, String path) throws IOException {
@@ -51,7 +55,7 @@ public class ExcelManipulate {
         Cell title_cell = title_row.createCell(0);
 
         // Set up the header
-        String headers[] = new String[] {"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
+        String headers[] = new String[]{"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
                 "付款資料", "報帳ID", "列印次數", "受款人", "備註", "稅前金額"};
 
         Row header_row = first.createRow(1);
@@ -99,7 +103,7 @@ public class ExcelManipulate {
         title_row.setHeight((short) (40 * 20));
         Cell title_cell = title_row.createCell(0);
 
-        String headers[] = new String[] {"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
+        String headers[] = new String[]{"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
                 "付款資料", "報帳ID", "列印次數", "受款人", "備註"};
         Row header_row = second.createRow(1);
         header_row.setHeight((short) (20 * 24));
@@ -135,7 +139,7 @@ public class ExcelManipulate {
         title_row.setHeight((short) (40 * 20));
         Cell title_cell = title_row.createCell(0);
 
-        String headers[] = new String[] {"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
+        String headers[] = new String[]{"報帳條碼", "經費或計畫名稱", "計畫代碼", "經費別", "金額", "報帳日", "傳票號碼",
                 "付款資料", "報帳ID", "列印次數", "受款人", "備註"};
         Row header_row = third.createRow(1);
         header_row.setHeight((short) (20 * 24));

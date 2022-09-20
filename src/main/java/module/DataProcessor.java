@@ -1,15 +1,21 @@
 package module;
 
 import config.EnvironmentVariable;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class DataProcessor {
+    private static DataProcessor uniqueInstance;
 
     private DataProcessor() {
     }
 
     public static DataProcessor getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new DataProcessor();
+        }
+
         return new DataProcessor();
     }
 
