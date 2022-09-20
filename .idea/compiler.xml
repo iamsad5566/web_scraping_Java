@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Crawler" />
+        <module name="Scraping" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Crawler" target="16" />
+      <module name="Scraping" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>

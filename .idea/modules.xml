@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Crawler.iml" filepath="$PROJECT_DIR$/Crawler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Scraping.iml" filepath="$PROJECT_DIR$/Scraping.iml" />
     </modules>
   </component>
 </project>
