@@ -229,11 +229,15 @@ public class ExcelManipulate {
             // 抓 first sheet，第二個 row 以後的資料
             for (int j = 2; first.getRow(j) != null; j++) {
                 Cell target = fourth.getRow(rowNum[i]).getCell(i);
-                String name = first.getRow(j).getCell(11).getStringCellValue();
-                String money = first.getRow(j).getCell(12).getStringCellValue();
-                if (name.contains(header.get(i))) {
-                    target.setCellValue(money);
-                    rowNum[i]++;
+                try {
+                    String name = first.getRow(j).getCell(11).getStringCellValue();
+                    String money = first.getRow(j).getCell(12).getStringCellValue();
+                    if (name.contains(header.get(i))) {
+                        target.setCellValue(money);
+                        rowNum[i]++;
+                    }
+                } catch (NullPointerException e) {
+                    System.out.println(e);
                 }
             }
 

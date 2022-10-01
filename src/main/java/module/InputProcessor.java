@@ -2,28 +2,27 @@ package module;
 
 import obj.Time;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 public class InputProcessor {
+    String year;
+    String month;
+
+    public InputProcessor(String[] args) {
+        this.year = args[0];
+        this.month = args[1];
+    }
 
     public Time getThisMonth() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("請輸入結帳年度：");
-        String year = scanner.next();
-        System.out.print("請輸入結帳月份：");
-        String month = scanner.next();
 
         Time t = new Time();
-        t.setYear(year);
+        t.setYear(this.year);
 
-        if (month.charAt(0) == '0' || month.charAt(0) == '1') {
-            t.setMonth(month);
+        if (this.month.charAt(0) == '0' || this.month.charAt(0) == '1') {
+            t.setMonth(this.month);
             return t;
         }
 
-        t.setMonth(0 + month);
+        t.setMonth(0 + this.month);
         return t;
     }
 
