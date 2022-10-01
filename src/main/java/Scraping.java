@@ -12,7 +12,7 @@ import java.lang.*;
 public class Scraping {
     public static void main(String[] args) throws Exception {
         // Get target month and last month from the input
-        InputProcessor inputProcessor = new InputProcessor();
+        InputProcessor inputProcessor = new InputProcessor(args);
         Time thisMonth = inputProcessor.getThisMonth();
         Time lastMonth = inputProcessor.getLastMonth(thisMonth);
         System.out.printf("Target year: %S, month: %S\n", thisMonth.getYear(),
