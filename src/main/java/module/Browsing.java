@@ -104,7 +104,7 @@ public class Browsing {
 
     private void saveTarget(WebDriver driver, WebElement element, String string,
                             ArrayList<String> list, Time thisMonthAndYear) {
-        if (string.split("//").length < 10 || !string.split("//")[5].startsWith(
+        if (string.split("//").length < 11 || !string.split("//")[5].startsWith(
                 thisMonthAndYear.getYear() + thisMonthAndYear.getMonth())) {
             return;
         }
@@ -112,6 +112,7 @@ public class Browsing {
         // 點進去找 name
         Actions act = new Actions(driver);
         act.doubleClick(element).perform();
+
         String nameInfo = driver.findElement(
                 By.xpath("/html/body/center/center/table[1]/tbody/tr[2]/td[2]")).getText();
         for (char c : nameInfo.toCharArray()) {
