@@ -7,6 +7,16 @@ Note
 ---
 * Load the config.yml (From local, pleas put it under the root path). <b>config.yml must existed</b>.
 * Take care of the format of yaml file, all the symbols are meaningful (include the space). See [yaml doc](https://www.cloudbees.com/blog/yaml-tutorial-everything-you-need-get-started) for detail.
+* Here's how the config.yml should look like:
+  
+| Key    | Value                |
+|:-------|:---------------------|
+| bossid | pi's account         |
+| assid  | assistant's account  |
+| asspwd | assistant's password |
+| OS     | #mac  #windows       |
+| member | **name list**        |
+  
 * Put the `chromedriver / chromedriver.exe` under the root path, here [download](https://chromedriver.chromium.org/) the chromedriver.
 * If you use Windows system, change the OS: mac into OS: windows in the `config.yml`. If you use macOS system, make sure you have allowed the chromedriver driven by the system (Open the privilege in the security and privacy).
  
