@@ -17,7 +17,8 @@ public class GetDriver {
         }
     }
 
-    public String getPath() {
-        return path;
+    public String downloadPath() {
+
+        return System.getProperty("user.home") + "/Downloads";
     }
 }
