@@ -24,7 +24,7 @@ public class Scraping {
         var list = Browsing.getInstance().BrowseController(driver, thisMonth, lastMonth);
 
         if (list.size() > 0) {
-            ExcelManipulate.getInstance().saveDataInExcel(list, getDriver.getPath());
+            ExcelManipulate.getInstance().saveDataInExcel(list, getDriver.downloadPath());
         } else {
             System.out.println("No data!");
         }

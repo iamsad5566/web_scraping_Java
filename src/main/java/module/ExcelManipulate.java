@@ -172,7 +172,11 @@ public class ExcelManipulate {
             row.setHeight((short) (20 * 20));
             for (int j = 0; j < headers.length; j++) {
                 Cell cell = row.createCell(j);
-                cell.setCellValue(second.getRow(i).getCell(j).getStringCellValue());
+                try {
+                    cell.setCellValue(second.getRow(i).getCell(j).getStringCellValue());
+                } catch(NullPointerException n) {
+                    System.out.println(i);
+                }
                 cell.setCellStyle(style);
             }
             targetRow++;
