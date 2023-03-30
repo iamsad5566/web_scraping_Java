@@ -129,8 +129,6 @@ public class Browsing {
 
         // 存入 list
         list.add(string);
-
-        System.out.println(string);
         driver.findElement(By.name("back")).click();
     }
 }
